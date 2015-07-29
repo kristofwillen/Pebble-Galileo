@@ -1,0 +1,44 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        ""
+    ],
+    "companyName": "kristof.willen@gmail.com",
+    "longName": "Galileo was wrong",
+    "projectType": "native",
+    "resources": {
+        "media": [
+            {
+                "file": "images/moonicon.png",
+                "name": "IMAGE_MOON_SMALL_ICON",
+                "type": "png"
+            },
+            {
+                "file": "images/sunicon.png",
+                "name": "IMAGE_SUN_SMALL_ICON",
+                "type": "png"
+            },
+            {
+                "file": "images/earth.png",
+                "name": "IMAGE_EARTH_ICON",
+                "type": "png"
+            },
+            {
+                "file": "images/azimuth.png",
+                "name": "IMAGE_AZIMUTH_BACKGROUND",
+                "type": "png"
+            }
+        ]
+    },
+    "sdkVersion": "3",
+    "shortName": "Galileo was wrong",
+    "targetPlatforms": [
+        "aplite",
+        "basalt"
+    ],
+    "uuid": "7739c113-8af4-4e50-8bad-a6dc58f139c1",
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": true
+    }
+}
