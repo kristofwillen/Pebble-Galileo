@@ -9,6 +9,11 @@
     "resources": {
         "media": [
             {
+                "file": "images/stars.png",
+                "name": "IMAGE_STARS_BACKGROUND",
+                "type": "png"
+            },
+            {
                 "file": "images/ufo.png",
                 "name": "IMAGE_UFO_ICON",
                 "type": "png"
@@ -26,11 +31,6 @@
             {
                 "file": "images/earth.png",
                 "name": "IMAGE_EARTH_ICON",
-                "type": "png"
-            },
-            {
-                "file": "images/stars.png",
-                "name": "IMAGE_STARS_BACKGROUND",
                 "type": "png"
             },
             {

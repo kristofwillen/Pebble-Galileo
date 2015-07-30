@@ -26,10 +26,10 @@ static void update_time() {
   struct tm *t = localtime(&temp);
   static PropertyAnimation *s_sun_animation, *s_moon_animation, *s_ufo_animation;
   static GRect sun_from_frame, sun_to_frame, moon_to_frame, moon_from_frame, ufo_to_frame, ufo_from_frame;
-  static int xufo, yufo;
+  static int xufo, yufo, ydir;
   
-  int sun_distance   = 60;
-  int moon_distance  = 40;
+  int sun_distance   = 64;
+  int moon_distance  = 48;
   int32_t sun_angle  = TRIG_MAX_ANGLE * t->tm_min/60;
   int32_t moon_angle = (TRIG_MAX_ANGLE * (((t->tm_hour % 12) * 6) + (t->tm_min / 10))) / (12 * 6);
   
@@ -67,11 +67,13 @@ static void update_time() {
   oldxmoon = xmoon;
   oldymoon = ymoon;
   
-  if ((t->tm_min % 10) == 0) {
+  if (t->tm_min % 10) {
     xufo = rand() % 144;
     yufo = rand() % 168;
+    if (t->tm_hour % 2) { ydir = 168; }
+    else { ydir = -16; }
     ufo_from_frame  = GRect(-29,yufo,29,16);
-    ufo_to_frame    = GRect(xufo,168,29,16);
+    ufo_to_frame    = GRect(xufo,ydir,29,16);
     layer_set_hidden((Layer *)s_ufo_layer, false);
     s_ufo_animation = property_animation_create_layer_frame((Layer *)s_ufo_layer, &ufo_from_frame, &ufo_to_frame);
     
