@@ -46,10 +46,20 @@ static void update_time() {
   
   s_sun_animation = property_animation_create_layer_frame((Layer *)s_sun_layer, &sun_from_frame, &sun_to_frame);
   animation_set_duration((Animation *)s_sun_animation,1000);
-  animation_schedule((Animation*) s_sun_animation);
+  
   
   s_moon_animation = property_animation_create_layer_frame((Layer *)s_moon_layer, &moon_from_frame, &moon_to_frame);
   //animation_set_duration((Animation *)s_moon_animation,100);
+
+  animation_set_handlers((Animation*) s_sun_animation, (AnimationHandlers) {
+    .stopped = (AnimationStoppedHandler) animation_stopped,
+  }, NULL);
+  
+  animation_set_handlers((Animation*) s_moon_animation, (AnimationHandlers) {
+    .stopped = (AnimationStoppedHandler) animation_stopped,
+  }, NULL);
+  
+  animation_schedule((Animation*) s_sun_animation);
   animation_schedule((Animation*) s_moon_animation);
   
   oldxsun  = xsun;
@@ -57,17 +67,17 @@ static void update_time() {
   oldxmoon = xmoon;
   oldymoon = ymoon;
   
-  if (t->tm_min == 0) {
+  if ((t->tm_min % 10) == 0) {
     xufo = rand() % 144;
     yufo = rand() % 168;
-    ufo_from_frame  = GRect(0,yufo,29,16);
+    ufo_from_frame  = GRect(-29,yufo,29,16);
     ufo_to_frame    = GRect(xufo,168,29,16);
     layer_set_hidden((Layer *)s_ufo_layer, false);
     s_ufo_animation = property_animation_create_layer_frame((Layer *)s_ufo_layer, &ufo_from_frame, &ufo_to_frame);
     
     animation_set_handlers((Animation*) s_ufo_animation, (AnimationHandlers) {
       .stopped = (AnimationStoppedHandler) animation_stopped,
-  }, NULL);
+    }, NULL);
   
     animation_set_duration((Animation *)s_ufo_animation,5000);
     animation_schedule((Animation*) s_ufo_animation);
