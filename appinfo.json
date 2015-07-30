@@ -4,10 +4,15 @@
         ""
     ],
     "companyName": "kristof.willen@gmail.com",
-    "longName": "Galileo was wrong",
+    "longName": "Copernicus was wrong",
     "projectType": "native",
     "resources": {
         "media": [
+            {
+                "file": "images/ufo.png",
+                "name": "IMAGE_UFO_ICON",
+                "type": "png"
+            },
             {
                 "file": "images/moonicon.png",
                 "name": "IMAGE_MOON_SMALL_ICON",
@@ -24,6 +29,11 @@
                 "type": "png"
             },
             {
+                "file": "images/stars.png",
+                "name": "IMAGE_STARS_BACKGROUND",
+                "type": "png"
+            },
+            {
                 "file": "images/azimuth.png",
                 "name": "IMAGE_AZIMUTH_BACKGROUND",
                 "type": "png"
@@ -31,7 +41,7 @@
         ]
     },
     "sdkVersion": "3",
-    "shortName": "Galileo was wrong",
+    "shortName": "Copernicus was wrong",
     "targetPlatforms": [
         "aplite",
         "basalt"
