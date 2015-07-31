@@ -6,7 +6,8 @@ static BitmapLayer *s_sun_layer, *s_moon_layer, *s_earth_layer, *s_stars_layer, 
 static int xsun, ysun, xmoon, ymoon, oldxsun, oldysun, oldxmoon, oldymoon = 0;
   
 
-void animation_stopped(Animation *animation, bool finished, void *data) {
+// 3 callback for each animation, otherwise I get interference in the animations...
+void animation_ufo_stopped(Animation *animation, bool finished, void *data) {
    
   layer_set_hidden((Layer *)s_ufo_layer, true);
   
@@ -19,6 +20,18 @@ void animation_stopped(Animation *animation, bool finished, void *data) {
     
 }
 
+void animation_sunmoon_stopped(Animation *animation, bool finished, void *data) {
+   
+  // Cleanup animations, maybe this fixes the crashes ?
+  #ifdef PBL_COLOR
+    // Do nothing, Basalt does this automagically
+  #else  
+    property_animation_destroy((PropertyAnimation*) animation);
+  #endif
+    
+}
+
+
 
 static void update_time() {
   // Get a tm structure
@@ -29,7 +42,7 @@ static void update_time() {
   static int xufo, yufo, ydir;
   
   int sun_distance   = 64;
-  int moon_distance  = 48;
+  int moon_distance  = 42;
   int32_t sun_angle  = TRIG_MAX_ANGLE * t->tm_min/60;
   int32_t moon_angle = (TRIG_MAX_ANGLE * (((t->tm_hour % 12) * 6) + (t->tm_min / 10))) / (12 * 6);
   
@@ -52,11 +65,11 @@ static void update_time() {
   //animation_set_duration((Animation *)s_moon_animation,100);
 
   animation_set_handlers((Animation*) s_sun_animation, (AnimationHandlers) {
-    .stopped = (AnimationStoppedHandler) animation_stopped,
+    .stopped = (AnimationStoppedHandler) animation_sunmoon_stopped,
   }, NULL);
   
   animation_set_handlers((Animation*) s_moon_animation, (AnimationHandlers) {
-    .stopped = (AnimationStoppedHandler) animation_stopped,
+    .stopped = (AnimationStoppedHandler) animation_sunmoon_stopped,
   }, NULL);
   
   animation_schedule((Animation*) s_sun_animation);
@@ -67,10 +80,10 @@ static void update_time() {
   oldxmoon = xmoon;
   oldymoon = ymoon;
   
-  if (t->tm_min % 10) {
-    xufo = rand() % 144;
-    yufo = rand() % 168;
-    if (t->tm_hour % 2) { ydir = 168; }
+  if ((t->tm_min % 5) == 0) {
+    xufo = rand() % 124 + 20;
+    yufo = rand() % 148 + 20;
+    if ((t->tm_hour % 2) == 0) { ydir = 168; }
     else { ydir = -16; }
     ufo_from_frame  = GRect(-29,yufo,29,16);
     ufo_to_frame    = GRect(xufo,ydir,29,16);
@@ -78,10 +91,10 @@ static void update_time() {
     s_ufo_animation = property_animation_create_layer_frame((Layer *)s_ufo_layer, &ufo_from_frame, &ufo_to_frame);
     
     animation_set_handlers((Animation*) s_ufo_animation, (AnimationHandlers) {
-      .stopped = (AnimationStoppedHandler) animation_stopped,
+      .stopped = (AnimationStoppedHandler) animation_ufo_stopped,
     }, NULL);
   
-    animation_set_duration((Animation *)s_ufo_animation,5000);
+    animation_set_duration((Animation *)s_ufo_animation,8000);
     animation_schedule((Animation*) s_ufo_animation);
     
   }
@@ -96,12 +109,21 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
 void handle_init(void) {
   my_window = window_create();
  
-  s_earth_bitmap = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_EARTH_ICON);
-  s_sun_bitmap   = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_SUN_SMALL_ICON);
-  s_moon_bitmap  = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_MOON_SMALL_ICON);
-  s_stars_bitmap = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_STARS_BACKGROUND);
-  s_ufo_bitmap   = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_UFO_ICON);
-  
+  #ifdef PBL_COLOR
+    s_earth_bitmap = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_EARTH_COLOR);
+    s_sun_bitmap   = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_SUN_COLOR);
+    s_moon_bitmap  = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_MOON_COLOR);
+    s_stars_bitmap = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_STARS_COLOR);
+    s_ufo_bitmap   = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_UFO_COLOR);
+  #else  
+    s_earth_bitmap = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_EARTH_ICON);
+    s_sun_bitmap   = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_SUN_SMALL_ICON);
+    s_moon_bitmap  = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_MOON_SMALL_ICON);
+    s_stars_bitmap = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_STARS_BACKGROUND);
+    s_ufo_bitmap   = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_UFO_ICON);
+  #endif
+    
+    
   s_stars_layer = bitmap_layer_create(GRect(0,0,144,168));
   bitmap_layer_set_bitmap(s_stars_layer, s_stars_bitmap);
   
@@ -121,6 +143,7 @@ void handle_init(void) {
   #ifdef PBL_COLOR
     bitmap_layer_set_compositing_mode(s_moon_layer,GCompOpSet);
     bitmap_layer_set_compositing_mode(s_sun_layer,GCompOpSet);
+    bitmap_layer_set_compositing_mode(s_ufo_layer,GCompOpSet);
   #else
     bitmap_layer_set_compositing_mode(s_moon_layer,GCompOpOr);
     bitmap_layer_set_compositing_mode(s_sun_layer,GCompOpOr);

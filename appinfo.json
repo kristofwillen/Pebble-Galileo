@@ -9,6 +9,31 @@
     "resources": {
         "media": [
             {
+                "file": "images/moon_color.png",
+                "name": "IMAGE_MOON_COLOR",
+                "type": "png"
+            },
+            {
+                "file": "images/sun_color.png",
+                "name": "IMAGE_SUN_COLOR",
+                "type": "png"
+            },
+            {
+                "file": "images/ufo_color.png",
+                "name": "IMAGE_UFO_COLOR",
+                "type": "png"
+            },
+            {
+                "file": "images/stars_color.png",
+                "name": "IMAGE_STARS_COLOR",
+                "type": "png"
+            },
+            {
+                "file": "images/earth_color.png",
+                "name": "IMAGE_EARTH_COLOR",
+                "type": "png"
+            },
+            {
                 "file": "images/stars.png",
                 "name": "IMAGE_STARS_BACKGROUND",
                 "type": "png"
@@ -20,6 +45,7 @@
             },
             {
                 "file": "images/moonicon.png",
+                "menuIcon": true,
                 "name": "IMAGE_MOON_SMALL_ICON",
                 "type": "png"
             },
@@ -47,7 +73,7 @@
         "basalt"
     ],
     "uuid": "7739c113-8af4-4e50-8bad-a6dc58f139c1",
-    "versionLabel": "1.0",
+    "versionLabel": "1.1",
     "watchapp": {
         "watchface": true
     }
