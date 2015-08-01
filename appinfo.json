@@ -1,13 +1,21 @@
 {
-    "appKeys": {},
+    "appKeys": {
+        "KEY_HOUR_DIAL": 0,
+        "KEY_PTOLMAIC": 0
+    },
     "capabilities": [
-        ""
+        "configurable"
     ],
     "companyName": "kristof.willen@gmail.com",
     "longName": "Copernicus was wrong",
     "projectType": "native",
     "resources": {
         "media": [
+            {
+                "file": "images/iss.png",
+                "name": "IMAGE_ISS",
+                "type": "png"
+            },
             {
                 "file": "images/moon_color.png",
                 "name": "IMAGE_MOON_COLOR",
@@ -73,7 +81,7 @@
         "basalt"
     ],
     "uuid": "7739c113-8af4-4e50-8bad-a6dc58f139c1",
-    "versionLabel": "1.1",
+    "versionLabel": "2.0",
     "watchapp": {
         "watchface": true
     }
