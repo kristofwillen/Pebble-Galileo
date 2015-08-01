@@ -8,7 +8,7 @@ static GBitmap *s_min_bitmap, *s_hour_bitmap, *s_earth_bitmap, *s_stars_bitmap, 
 static BitmapLayer *s_min_layer, *s_hour_layer, *s_earth_layer, *s_stars_layer, *s_ufo_layer;
 static int xmin, ymin, xhour, yhour, oldxmin, oldymin, oldxhour, oldyhour = 0;
 static bool ScienceMovesForwardFlag = false;
-static bool SunHourFlag = true;
+static bool SunHourFlag = false;
   
 
 // 3 callback for each animation, otherwise I get interference in the animations...
