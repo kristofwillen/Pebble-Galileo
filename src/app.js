@@ -13,7 +13,7 @@ Pebble.addEventListener("webviewclosed",
  
     //Send to Pebble, persist there
     Pebble.sendAppMessage(
-      {'KEY_CITY': configuration.KEY_HOUR_DIAL, 'KEY_RANDOM': configuration.KEY_PTOLMAIC},
+      {'KEY_HOUR_DIAL': configuration.KEY_HOUR_DIAL, 'KEY_PTOLMAIC': configuration.KEY_PTOLMAIC},
       function(e) {
         console.log("[DBUG] Settings data sent successfully ");
       },
