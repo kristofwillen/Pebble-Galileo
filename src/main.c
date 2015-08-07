@@ -37,6 +37,7 @@ static void update_time() {
   // Get a tm structure
   time_t temp = time(NULL); 
   struct tm *t = localtime(&temp);
+  srand((unsigned) time(&temp));
   static PropertyAnimation *s_min_animation, *s_hour_animation, *s_ufo_animation;
   static GRect min_from_frame, min_to_frame, hour_to_frame, hour_from_frame, ufo_to_frame, ufo_from_frame;
   static int x1ufo, x2ufo, y1ufo, y2ufo;
@@ -62,7 +63,7 @@ static void update_time() {
   
   
   s_hour_animation = property_animation_create_layer_frame((Layer *)s_hour_layer, &hour_from_frame, &hour_to_frame);
-  //animation_set_duration((Animation *)s_moon_animation,100);
+  animation_set_duration((Animation *)s_hour_animation,1000);
 
   animation_set_handlers((Animation*) s_min_animation, (AnimationHandlers) {
     .stopped = (AnimationStoppedHandler) animation_sunmoon_stopped,
@@ -165,18 +166,18 @@ void handle_init(void) {
   #else  
     s_earth_bitmap = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_EARTH_ICON);
     if (ScienceMovesForwardFlag) {
-      APP_LOG(APP_LOG_LEVEL_DEBUG, "[DBUG] SciencemovesForward !");
+     //APP_LOG(APP_LOG_LEVEL_DEBUG, "[DBUG] SciencemovesForward !");
       s_min_bitmap   = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_MOON_SMALL_ICON);
       s_hour_bitmap  = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_ISS); 
     }
    else {
     if (SunHourFlag) {
-      APP_LOG(APP_LOG_LEVEL_DEBUG, "[DBUG] SunHourFlag = true %d", SunHourFlag);
+      //APP_LOG(APP_LOG_LEVEL_DEBUG, "[DBUG] SunHourFlag = true %d", SunHourFlag);
       s_min_bitmap   = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_MOON_SMALL_ICON);
       s_hour_bitmap  = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_SUN_SMALL_ICON);
     }
     else {
-      APP_LOG(APP_LOG_LEVEL_DEBUG, "[DBUG] SunHourFlag= false %d", SunHourFlag);
+      //APP_LOG(APP_LOG_LEVEL_DEBUG, "[DBUG] SunHourFlag= false %d", SunHourFlag);
       s_min_bitmap   = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_SUN_SMALL_ICON);
       s_hour_bitmap  = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_MOON_SMALL_ICON);
     }
