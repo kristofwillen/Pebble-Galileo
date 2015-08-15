@@ -95,7 +95,7 @@ static void update_time() {
       .stopped = (AnimationStoppedHandler) animation_ufo_stopped,
     }, NULL);
   
-    animation_set_duration((Animation *)s_ufo_animation,8000);
+    animation_set_duration((Animation *)s_ufo_animation,15000);
     animation_schedule((Animation*) s_ufo_animation);
     
   }
